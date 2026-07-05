@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品管理</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background: #fff; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+        th { background: #f5f8fa; }
+        .search-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .search-bar input, .search-bar select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        .btn { padding: 8px 16px; background: #1a7aaa; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; }
+        .btn-secondary { background: #6c757d; }
+        .pagination { margin-top: 20px; display: flex; gap: 6px; flex-wrap: wrap; }
+        .pagination a { padding: 6px 12px; border: 1px solid #ddd; text-decoration: none; color: #333; border-radius: 4px; }
+        .pagination a.active { background: #1a7aaa; color: white; border-color: #1a7aaa; }
+        .pagination a.disabled { opacity: 0.5; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+<h2><i class="fas fa-boxes"></i> 商品列表</h2>
+
+<!-- 搜索表单 -->
+<form class="search-bar" method="get" action="/product/list">
+    <select name="catId">
+        <option value="">全部分类</option>
+        <option th:each="c : ${categories}"
+                th:value="${c.id}"
+                th:text="${c.name}"
+                th:selected="${param.catId != null and param.catId[0] == c.id}"></option>
+    </select>
+    <input type="text" name="keyword" placeholder="商品名称" th:value="${param.keyword != null ? param.keyword[0] : ''}">
+    <input type="number" name="minPrice" placeholder="最低价" th:value="${param.minPrice != null ? param.minPrice[0] : ''}">
+    <input type="number" name="maxPrice" placeholder="最高价" th:value="${param.maxPrice != null ? param.maxPrice[0] : ''}">
+    <button type="submit" class="btn"><i class="fas fa-search"></i> 搜索</button>
+    <a href="/product/list" class="btn btn-secondary">重置</a>
+</form>
+
+<!-- 数据表格 -->
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>名称</th>
+        <th>分类</th>
+        <th>价格</th>
+        <th>描述</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${pageInfo.list}">
+        <td th:text="${p.id}">1</td>
+        <td th:text="${p.name}">商品名</td>
+        <td th:text="${p.categoryName}">分类</td>
+        <td th:text="'¥' + ${p.price}">100</td>
+        <td th:text="${p.descp}">描述</td>
+    </tr>
+    <tr th:if="${pageInfo == null or pageInfo.list == null or pageInfo.list.empty}">
+        <td colspan="5" style="text-align:center; color:#888;">暂无数据</td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- 分页 -->
+<div class="pagination" th:if="${pageInfo != null and pageInfo.total > 0}">
+    <!-- 首页 -->
+    <a th:href="@{/product/list(pageNum=1, catId=${param.catId != null ? param.catId[0] : ''}, keyword=${param.keyword != null ? param.keyword[0] : ''}, minPrice=${param.minPrice != null ? param.minPrice[0] : ''}, maxPrice=${param.maxPrice != null ? param.maxPrice[0] : ''})}">首页</a>
+
+    <!-- 上一页 -->
+    <a th:href="@{/product/list(pageNum=${pageInfo.prePage}, catId=${param.catId != null ? param.catId[0] : ''}, keyword=${param.keyword != null ? param.keyword[0] : ''}, minPrice=${param.minPrice != null ? param.minPrice[0] : ''}, maxPrice=${param.maxPrice != null ? param.maxPrice[0] : ''})}"
+       th:class="${pageInfo.hasPreviousPage ? '' : 'disabled'}">上一页</a>
+
+    <!-- 页码（最多显示5页） -->
+    <span th:each="num : ${#numbers.sequence(1, pageInfo.pages)}" th:if="${num <= 5}">
+        <a th:href="@{/product/list(pageNum=${num}, catId=${param.catId != null ? param.catId[0] : ''}, keyword=${param.keyword != null ? param.keyword[0] : ''}, minPrice=${param.minPrice != null ? param.minPrice[0] : ''}, maxPrice=${param.maxPrice != null ? param.maxPrice[0] : ''})}"
+           th:text="${num}"
+           th:class="${pageInfo.pageNum == num ? 'active' : ''}"></a>
+    </span>
+    <span th:if="${pageInfo.pages > 5}">…</span>
+
+    <!-- 下一页 -->
+    <a th:href="@{/product/list(pageNum=${pageInfo.nextPage}, catId=${param.catId != null ? param.catId[0] : ''}, keyword=${param.keyword != null ? param.keyword[0] : ''}, minPrice=${param.minPrice != null ? param.minPrice[0] : ''}, maxPrice=${param.maxPrice != null ? param.maxPrice[0] : ''})}"
+       th:class="${pageInfo.hasNextPage ? '' : 'disabled'}">下一页</a>
+
+    <!-- 尾页 -->
+    <a th:href="@{/product/list(pageNum=${pageInfo.pages}, catId=${param.catId != null ? param.catId[0] : ''}, keyword=${param.keyword != null ? param.keyword[0] : ''}, minPrice=${param.minPrice != null ? param.minPrice[0] : ''}, maxPrice=${param.maxPrice != null ? param.maxPrice[0] : ''})}">尾页</a>
+</div>
+
+</body>
+</html>
