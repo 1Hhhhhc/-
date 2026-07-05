@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧商品管理系统 - 登录</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4a0000 0%, #8b0000 100%);
+            padding: 20px;
+        }
+        .login-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            padding: 48px 40px 40px;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeUp 0.6s ease-out;
+        }
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .login-container .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .login-container .logo .ak-icon {
+            font-size: 48px;
+            color: #cc0000;
+            background: #fce4e4;
+            padding: 16px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .login-container .logo .ak-icon i {
+            font-size: 36px;
+        }
+        .login-container .logo .ak-icon .gun1 {
+            transform: rotate(-45deg);
+            margin-right: -10px;
+        }
+        .login-container .logo .ak-icon .gun2 {
+            transform: rotate(135deg);
+            margin-left: -10px;
+        }
+        .login-container .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #8b0000;
+            margin-top: 12px;
+        }
+        .login-container .logo p {
+            font-size: 14px;
+            color: #6b7a8d;
+            margin-top: 4px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+        .form-group .input-wrapper {
+            position: relative;
+        }
+        .form-group .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8a9aaa;
+            font-size: 16px;
+        }
+        .form-group .input-wrapper input {
+            width: 100%;
+            padding: 12px 14px 12px 44px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #f8fafc;
+            transition: border-color 0.2s;
+        }
+        .form-group .input-wrapper input:focus {
+            outline: none;
+            border-color: #cc0000;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(204,0,0,0.1);
+        }
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+        .form-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #5a6a7a;
+            cursor: pointer;
+        }
+        .form-options a {
+            color: #cc0000;
+            text-decoration: none;
+        }
+        .form-options a:hover {
+            text-decoration: underline;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #8b0000, #cc0000);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(204,0,0,0.4);
+        }
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        .error-msg {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            border-left: 4px solid #dc2626;
+            display: none;
+        }
+        .error-msg.show {
+            display: block;
+        }
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #8a9aaa;
+        }
+        .footer-text span {
+            color: #cc0000;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <div class="logo">
+        <span class="ak-icon">
+            <i class="fas fa-gun gun1"></i>
+            <i class="fas fa-gun gun2"></i>
+        </span>
+        <h1>智慧商品管理系统</h1>
+        <p>登录以进入商品管理</p>
+    </div>
+
+    <!-- 错误信息 -->
+    <div id="errorMsg" class="error-msg">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="errorText">用户名或密码错误</span>
+    </div>
+
+    <!-- 登录表单 -->
+    <form action="/doLogin" method="post">
+        <div class="form-group">
+            <label for="username">账号</label>
+            <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <input type="text" id="username" name="username" placeholder="请输入账号" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <div class="input-wrapper">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" name="password" placeholder="请输入密码" required>
+            </div>
+        </div>
+        <div class="form-options">
+            <label>
+                <input type="checkbox" name="remember-me"> 记住我
+            </label>
+        </div>
+        <button type="submit" class="btn-login">
+            <i class="fas fa-sign-in-alt"></i> 登录
+        </button>
+    </form>
+    <div class="footer-text">
+        默认账号：<span>admin</span> / 密码：<span>123456</span>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('error') === 'true') {
+            const el = document.getElementById('errorMsg');
+            el.classList.add('show');
+            document.getElementById('errorText').textContent = '用户名或密码错误，请重试';
+        }
+        if (params.get('logout') === 'true') {
+            const el = document.getElementById('errorMsg');
+            el.classList.add('show');
+            el.style.background = '#f0fdf4';
+            el.style.color = '#16a34a';
+            el.style.borderLeftColor = '#16a34a';
+            document.getElementById('errorText').textContent = '您已成功退出';
+        }
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页 - 智慧商品管理系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', sans-serif;
+            background: #ffffff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .welcome-container {
+            text-align: center;
+            padding: 50px 60px;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-container .icon {
+            font-size: 80px;
+            color: #cc0000;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .welcome-container h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #8b0000;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .welcome-container .subtitle {
+            font-size: 18px;
+            color: #5a6a7a;
+            margin-bottom: 6px;
+        }
+
+        .welcome-container .subtitle i {
+            color: #cc0000;
+            margin: 0 6px;
+        }
+
+        .welcome-container .divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #cc0000, #ff6b6b);
+            margin: 20px auto 24px;
+            border-radius: 4px;
+        }
+
+        .welcome-container .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 10px;
+        }
+
+        .welcome-container .stats .stat-item {
+            background: #fdf5f5;
+            padding: 18px 32px;
+            border-radius: 12px;
+            border: 1px solid #fce4e4;
+            min-width: 120px;
+            transition: all 0.3s;
+        }
+
+        .welcome-container .stats .stat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(204,0,0,0.12);
+            border-color: #cc0000;
+        }
+
+        .welcome-container .stats .stat-item .num {
+            font-size: 32px;
+            font-weight: 700;
+            color: #8b0000;
+        }
+
+        .welcome-container .stats .stat-item .label {
+            font-size: 14px;
+            color: #6b7a8d;
+            margin-top: 4px;
+        }
+
+        .welcome-container .hint {
+            margin-top: 28px;
+            font-size: 15px;
+            color: #8a9aaa;
+            border-top: 1px solid #f0e8e8;
+            padding-top: 20px;
+        }
+
+        .welcome-container .hint i {
+            color: #cc0000;
+            margin-right: 8px;
+        }
+
+        .welcome-container .hint span {
+            color: #8b0000;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="welcome-container">
+
+    <i class="fas fa-crossed-swords icon"></i>
+
+    <h1>⚔️ 智慧商品管理系统</h1>
+    <p class="subtitle">
+        <i class="fas fa-bolt"></i>
+        欢迎来到智慧管理系统 · 管理你的武器收藏
+        <i class="fas fa-bolt"></i>
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div class="num" id="productCount">100</div>
+            <div class="label">武器总数</div>
+        </div>
+        <div class="stat-item">
+            <div class="num" id="categoryCount">6</div>
+            <div class="label">武器分类</div>
+        </div>
+        <div class="stat-item">
+            <div class="num" id="brandCount">20+</div>
+            <div class="label">国家/地区</div>
+        </div>
+    </div>
+
+    <div class="hint">
+        <i class="fas fa-arrow-left"></i>
+        点击左侧 <span>武器管理</span> 浏览全部武器
+    </div>
+</div>
+
+<script>
+    console.log('⚔️ 智慧商品管理系统已加载');
+</script>
+</body>
+</html>
